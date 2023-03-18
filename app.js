@@ -2,17 +2,26 @@ const express = require('express')
 const app = express()
 const port =8080;
 
-app.get('/', (req, res)=> {
-  res.send('Home page')
-});
+//midleware
 
-app.get('/hola-mundo', (req, res)=> {
-    res.send('Hello world on its respective route')
+// servir contenido estatico
+
+app.use(express.static('./public/template') );
+
+
+app.get('/generic', (req, res)=> {
+    res.sendFile(__dirname+'/public/template/generic.html')
+  });
+
+app.get('/elements', (req, res)=> {
+    res.sendFile(__dirname+'/public/template/elements.html')
   });
 
 app.get('*', (req, res)=> {
-    res.send('404 | Page not found')
+    res.sendFile(__dirname+'/public/old/404.html')
   });
+
+
 app.listen(port,()=>{
     console.log(`Example app listening at http://localhost:${port}`);
 })
