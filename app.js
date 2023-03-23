@@ -1,24 +1,45 @@
 const express = require('express')
+const hbs = require('hbs');
+
 const app = express()
 const port =8080;
 
+
+
 //midleware
 
-// servir contenido estatico
 
+//Handlebars
+app.set('view engine','hbs');
+hbs.registerPartials(__dirname + '/views/parcials');
+
+
+// servir contenido estatico
 app.use(express.static('./public/template') );
 
+app.get('/', (req, res)=> {
+  res.render('home',{
+    nombre:'Santiago cardona garzon',
+    titulo:'Ingeniero en sistemas'
+  });
+});
 
 app.get('/generic', (req, res)=> {
-    res.sendFile(__dirname+'/public/template/generic.html')
+    res.render('generic',{
+      nombre:'Santiago cardona garzon',
+      titulo:'Ingeniero en sistemas'
+    });
   });
 
 app.get('/elements', (req, res)=> {
-    res.sendFile(__dirname+'/public/template/elements.html')
+    res.render('elements',{
+      nombre:'Santiago cardona garzon',
+      titulo:'Ingeniero en sistemas'
+    })
   });
 
 app.get('*', (req, res)=> {
-    res.sendFile(__dirname+'/public/old/404.html')
+    res.render('*')
   });
 
 
